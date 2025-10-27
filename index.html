@@ -1,62 +1,960 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>FinPilot Students — Your Smart Finance & Earning Companion</title>
-<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-<style>
-:root{ --accent1:#06B6D4; --accent2:#2563EB; --bg:#0f1724; --muted:#94a3b8; --card: rgba(255,255,255,0.03); --glass-border: rgba(255,255,255,0.04); --radius:12px; }
-body{margin:0;font-family:Inter,system-ui,Arial;background:radial-gradient(1200px 400px at 10% 10%, rgba(37,99,235,0.12), transparent 10%), radial-gradient(800px 300px at 90% 90%, rgba(6,182,212,0.10), transparent 10%), var(--bg); color:#ecf5ff;}
-.wrap{max-width:1100px;margin:0 auto;padding:24px;}
-.header{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0;}
-.brand{display:flex;gap:12px;align-items:center;text-decoration:none;color:inherit}
-.logo{width:46px;height:46px;border-radius:10px;overflow:hidden}
-nav a{color:var(--muted);text-decoration:none;margin-left:12px;font-weight:600}
-nav a:hover{color:#fff}
-.btn{background:linear-gradient(90deg,var(--accent1),var(--accent2));border:none;color:#fff;padding:10px 14px;border-radius:10px;font-weight:700;cursor:pointer}
-.ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:8px 10px;border-radius:10px;color:var(--muted)}
-.card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:16px;border-radius:10px;border:1px solid var(--glass-border);}
-.footer{padding:18px 0;color:var(--muted);font-size:14px;text-align:center}
-.container-grid{display:grid;grid-template-columns:1fr 400px;gap:20px;align-items:start}
-@media(max-width:900px){.container-grid{grid-template-columns:1fr}nav{display:none}}
-.muted{color:var(--muted);font-size:13px}
-.small{font-size:13px;color:var(--muted)}
-input,select,textarea{background:transparent;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);color:inherit;width:100%}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Personal Finance & Earning Dashboard</title>
+  <meta name="description" content="Track your income, expenses, and explore student earning opportunities">
+  <meta name="author" content="Finance Dashboard">
+  <meta property="og:title" content="Personal Finance & Earning Dashboard">
+  <meta property="og:description" content="Track your income, expenses, and explore student earning opportunities">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@lovable_dev">
+  <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary: #10B981;
+      --primary-dark: #059669;
+      --secondary: #14B8A6;
+      --background: #F5F7FA;
+      --card: #FFFFFF;
+      --text: #1F2937;
+      --text-muted: #6B7280;
+      --border: #E5E7EB;
+      --success: #10B981;
+      --danger: #EF4444;
+      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+      --radius: 12px;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+      background: linear-gradient(135deg, #F5F7FA 0%, #E5E7EB 100%);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      color: white;
+      padding: 2rem 1rem;
+      box-shadow: var(--shadow-lg);
+      animation: slideDown 0.5s ease-out;
+    }
+
+    .header-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .header-title {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .header-subtitle {
+      font-size: 1rem;
+      opacity: 0.95;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem 1rem;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+      transition: all 0.3s ease;
+      animation: fadeIn 0.5s ease-out;
+    }
+
+    .card:hover {
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-2px);
+    }
+
+    .card-header {
+      margin-bottom: 1.5rem;
+    }
+
+    .card-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.25rem;
+    }
+
+    .card-description {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .summary-card {
+      border-left: 4px solid var(--primary);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .summary-card.income {
+      border-left-color: var(--success);
+    }
+
+    .summary-card.expense {
+      border-left-color: var(--danger);
+    }
+
+    .summary-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .summary-card-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+    }
+
+    .summary-card-value {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+    }
+
+    .summary-card-label {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+    }
+
+    .form-grid {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    label {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    input, select {
+      padding: 0.75rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: all 0.2s;
+      background: var(--card);
+    }
+
+    input:focus, select:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+    }
+
+    button {
+      padding: 0.75rem 1.5rem;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: var(--shadow);
+    }
+
+    button:hover {
+      background: var(--primary-dark);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    button:active {
+      transform: translateY(0);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .btn-outline:hover {
+      background: var(--background);
+    }
+
+    .btn-outline.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
+    .btn-sm {
+      padding: 0.5rem 1rem;
+      font-size: 0.875rem;
+    }
+
+    .btn-icon {
+      padding: 0.5rem;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn-danger {
+      background: transparent;
+      color: var(--danger);
+      box-shadow: none;
+    }
+
+    .btn-danger:hover {
+      background: rgba(239, 68, 68, 0.1);
+    }
+
+    .grid {
+      display: grid;
+      gap: 1.5rem;
+    }
+
+    .grid-2 {
+      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    }
+
+    .grid-3 {
+      grid-template-columns: 1fr 2fr;
+    }
+
+    .search-filter {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .search-box {
+      position: relative;
+      flex: 1;
+      min-width: 250px;
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 0.75rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    .search-box input {
+      padding-left: 2.5rem;
+      width: 100%;
+    }
+
+    .filter-buttons {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .transaction-list, .opportunity-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .transaction-item, .opportunity-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      transition: all 0.2s;
+      background: var(--card);
+    }
+
+    .transaction-item:hover, .opportunity-item:hover {
+      background: rgba(16, 185, 129, 0.02);
+      border-color: var(--primary);
+    }
+
+    .transaction-left, .opportunity-left {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex: 1;
+    }
+
+    .transaction-icon, .opportunity-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+    }
+
+    .transaction-icon.income {
+      background: rgba(16, 185, 129, 0.1);
+      color: var(--success);
+    }
+
+    .transaction-icon.expense {
+      background: rgba(239, 68, 68, 0.1);
+      color: var(--danger);
+    }
+
+    .opportunity-icon {
+      background: rgba(59, 130, 246, 0.1);
+      color: #3B82F6;
+    }
+
+    .transaction-details, .opportunity-details {
+      flex: 1;
+    }
+
+    .transaction-description, .opportunity-title {
+      font-weight: 500;
+      margin-bottom: 0.25rem;
+    }
+
+    .transaction-meta, .opportunity-meta {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.875rem;
+      color: var(--text-muted);
+    }
+
+    .transaction-category, .opportunity-category {
+      display: inline-block;
+      padding: 0.125rem 0.5rem;
+      background: var(--background);
+      border-radius: 4px;
+      font-size: 0.75rem;
+      border: 1px solid var(--border);
+    }
+
+    .transaction-right, .opportunity-right {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .transaction-amount {
+      font-size: 1.125rem;
+      font-weight: 600;
+    }
+
+    .transaction-amount.income {
+      color: var(--success);
+    }
+
+    .transaction-amount.expense {
+      color: var(--danger);
+    }
+
+    .opportunity-earnings {
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: var(--success);
+    }
+
+    .chart-container {
+      position: relative;
+      height: 300px;
+      margin-top: 1rem;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 3rem 1rem;
+      color: var(--text-muted);
+    }
+
+    .empty-state p {
+      margin-bottom: 0.5rem;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 768px) {
+      .header-title { font-size: 1.5rem; }
+      .grid-3 { grid-template-columns: 1fr; }
+      .grid-2 { grid-template-columns: 1fr; }
+      .search-filter { flex-direction: column; }
+      .filter-buttons { width: 100%; justify-content: stretch; }
+      .filter-buttons button { flex: 1; }
+      .transaction-item, .opportunity-item { flex-direction: column; align-items: flex-start; gap: 1rem; }
+      .transaction-right, .opportunity-right { width: 100%; justify-content: space-between; }
+    }
+  </style>
 </head>
 <body>
-<header class="wrap header">
-  <a class="brand" href="index.html"><div class="logo"><img src="assets/logo.svg" alt="logo" style="width:46px;height:46px"></div><div><strong>FinPilot Students</strong><div class="small">Your finance co-pilot for students</div></div></a>
-  <nav><a href="index.html">Home</a><a href="dashboard.html">Dashboard</a><a href="earn.html">Student Jobs & Services</a><a href="about.html">About</a><a href="contact.html">Contact</a></nav>
-</header>
-
-<main class="wrap">
-  <section class="card" style="display:flex;gap:18px;align-items:center;justify-content:space-between">
-    <div style="max-width:620px">
-      <h1 style="margin:0 0 8px 0;font-family:'DM Serif Display', serif;font-size:34px">FinPilot Students — a financial co-pilot made for learners and hustlers</h1>
-      <p class="muted">Track pocket money, part-time income, scholarships and manage expenses. Special student features: earning opportunities, quick-savings tips and goal trackers.</p>
-      <div style="margin-top:12px;display:flex;gap:10px"><a class="btn" href="dashboard.html">Go to Dashboard</a><a class="btn ghost" href="earn.html" style="background:transparent;border:1px solid rgba(255,255,255,0.06)">Explore Jobs</a></div>
+  <header>
+    <div class="header-content">
+      <h1 class="header-title">
+        <span>💰</span>
+        Personal Finance & Earning Dashboard
+      </h1>
+      <p class="header-subtitle">Track your income, expenses, and explore earning opportunities</p>
     </div>
-    <div style="min-width:300px"><div class="card"><div class="small">Student snapshot</div><h3 id="homeBalance">₹0</h3><div class="small">Balance</div></div></div>
-  </section>
+  </header>
 
-  <section style="margin-top:18px" class="card">
-    <h3 style="margin-top:0">Why FinPilot Students?</h3>
-    <div style="display:flex;gap:12px;flex-wrap:wrap">
-      <div style="min-width:200px"><strong>Privacy-first</strong><div class="small muted">Data stays on your device.</div></div>
-      <div style="min-width:200px"><strong>Student-focused</strong><div class="small muted">Income categories and tips for students.</div></div>
-      <div style="min-width:200px"><strong>Earn & Learn</strong><div class="small muted">Find part-time gigs or offer skills.</div></div>
+  <div class="container">
+    <div class="summary-grid">
+      <div class="card summary-card income">
+        <div class="summary-card-header">
+          <span class="card-title">Total Income</span>
+          <div class="summary-card-icon" style="background: rgba(16, 185, 129, 0.1); color: #10B981;">↗️</div>
+        </div>
+        <div class="summary-card-value" style="color: #10B981;" id="totalIncome">₹0</div>
+        <div class="summary-card-label" id="incomeCount">0 transactions</div>
+      </div>
+      <div class="card summary-card expense">
+        <div class="summary-card-header">
+          <span class="card-title">Total Expenses</span>
+          <div class="summary-card-icon" style="background: rgba(239, 68, 68, 0.1); color: #EF4444;">↘️</div>
+        </div>
+        <div class="summary-card-value" style="color: #EF4444;" id="totalExpenses">₹0</div>
+        <div class="summary-card-label" id="expenseCount">0 transactions</div>
+      </div>
+      <div class="card summary-card">
+        <div class="summary-card-header">
+          <span class="card-title">Balance</span>
+          <div class="summary-card-icon" style="background: rgba(16, 185, 129, 0.1); color: #10B981;">💳</div>
+        </div>
+        <div class="summary-card-value" id="balance">₹0</div>
+        <div class="summary-card-label">Current balance</div>
+      </div>
     </div>
-  </section>
-</main>
 
-<footer class="wrap footer">Need urgent help? Email: <a href="mailto:kamanasirisha117@gmail.com">kamanasirisha117@gmail.com</a> • © 2025 FinPilot Students</footer>
-<script>
-const transactions = JSON.parse(localStorage.getItem('finpilot-students-v1')||'[]');
-const income = transactions.filter(t=>t.type==='income').reduce((s,t)=>s+t.amount,0);
-const expenses = transactions.filter(t=>t.type==='expense').reduce((s,t)=>s+t.amount,0);
-document.getElementById('homeBalance').textContent = '₹' + Math.round(income - expenses).toLocaleString('en-IN');
-</script>
+    <div class="grid grid-3">
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">➕ Add Transaction</h2>
+          <p class="card-description">Record your income or expenses</p>
+        </div>
+        <form id="transactionForm" class="form-grid">
+          <div class="form-group">
+            <label for="description">Description</label>
+            <input type="text" id="description" placeholder="e.g., Grocery shopping" required>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="amount">Amount (₹)</label>
+              <input type="number" id="amount" step="0.01" placeholder="0.00" required>
+            </div>
+            <div class="form-group">
+              <label for="date">Date</label>
+              <input type="date" id="date" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="type">Type</label>
+              <select id="type">
+                <option value="expense">Expense</option>
+                <option value="income">Income</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="category">Category</label>
+              <select id="category">
+                <option value="Salary">Salary</option>
+                <option value="Freelance">Freelance</option>
+                <option value="Investment">Investment</option>
+                <option value="Food & Dining">Food & Dining</option>
+                <option value="Rent">Rent</option>
+                <option value="Transportation">Transportation</option>
+                <option value="Entertainment">Entertainment</option>
+                <option value="Shopping">Shopping</option>
+                <option value="Healthcare">Healthcare</option>
+                <option value="Utilities">Utilities</option>
+                <option value="Others">Others</option>
+              </select>
+            </div>
+          </div>
+          <button type="submit">Add Transaction</button>
+        </form>
+      </div>
+      <div class="grid">
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">📊 Expenses by Category</h2>
+            <p class="card-description">Distribution of your spending</p>
+          </div>
+          <div class="chart-container">
+            <canvas id="pieChart"></canvas>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">📈 Income vs Expenses</h2>
+            <p class="card-description">Overall comparison</p>
+          </div>
+          <div class="chart-container">
+            <canvas id="barChart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top: 2rem;">
+      <div class="card-header">
+        <h2 class="card-title">📝 Transaction History</h2>
+        <p class="card-description">View and manage your transactions</p>
+      </div>
+      <div class="search-filter">
+        <div class="search-box">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="transactionSearchInput" placeholder="Search transactions...">
+        </div>
+        <div class="filter-buttons">
+          <button class="btn-outline btn-sm active" data-filter="all">All</button>
+          <button class="btn-outline btn-sm" data-filter="income">Income</button>
+          <button class="btn-outline btn-sm" data-filter="expense">Expense</button>
+        </div>
+      </div>
+      <div id="transactionList" class="transaction-list"></div>
+    </div>
+
+    <div class="card" style="margin-top: 2rem;">
+      <div class="card-header">
+        <h2 class="card-title">🎓 Student Earning Opportunities</h2>
+        <p class="card-description">Explore ways to earn money as a student</p>
+      </div>
+      <div class="search-filter">
+        <div class="search-box">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="opportunitySearchInput" placeholder="Search opportunities...">
+        </div>
+        <div class="filter-buttons">
+          <button class="btn-outline btn-sm active" data-opportunity-filter="all">All</button>
+          <button class="btn-outline btn-sm" data-opportunity-filter="Freelancing">Freelancing</button>
+          <button class="btn-outline btn-sm" data-opportunity-filter="Tutoring">Tutoring</button>
+          <button class="btn-outline btn-sm" data-opportunity-filter="Surveys">Surveys</button>
+          <button class="btn-outline btn-sm" data-opportunity-filter="Content Creation">Content Creation</button>
+        </div>
+      </div>
+      <div id="opportunityList" class="opportunity-list"></div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script>
+    // Finance Dashboard Data
+    let transactions = JSON.parse(localStorage.getItem('finance-transactions')) || [];
+    let currentTransactionFilter = 'all';
+    let transactionSearchTerm = '';
+    let pieChartInstance = null;
+    let barChartInstance = null;
+
+    // Student Earning Data
+    const opportunities = [
+      { id: 1, title: "Freelance Writing", description: "Write articles for blogs", category: "Freelancing", platform: "Upwork", earnings: "$50-200", requirements: "Good English skills" },
+      { id: 2, title: "Online Tutoring", description: "Teach math to high school students", category: "Tutoring", platform: "Chegg", earnings: "$15-30/hr", requirements: "Subject expertise" },
+      { id: 3, title: "Paid Surveys", description: "Complete market research surveys", category: "Surveys", platform: "Swagbucks", earnings: "$1-5/survey", requirements: "None" },
+      { id: 4, title: "Video Content Creation", description: "Create educational YouTube videos", category: "Content Creation", platform: "YouTube", earnings: "$1000+/month", requirements: "Camera & editing skills" },
+      { id: 5, title: "Graphic Design Gigs", description: "Design logos and banners", category: "Freelancing", platform: "Fiverr", earnings: "$20-100/gig", requirements: "Design software knowledge" },
+      { id: 6, title: "Language Tutoring", description: "Teach English online", category: "Tutoring", platform: "VIPKid", earnings: "$14-22/hr", requirements: "Fluent English" }
+    ];
+    let currentOpportunityFilter = 'all';
+    let opportunitySearchTerm = '';
+
+    document.addEventListener('DOMContentLoaded', () => {
+      // Initialize date input
+      document.getElementById('date').valueAsDate = new Date();
+
+      // Transaction event listeners
+      document.getElementById('transactionForm').addEventListener('submit', handleTransactionSubmit);
+      document.getElementById('transactionSearchInput').addEventListener('input', handleTransactionSearch);
+      document.querySelectorAll('[data-filter]').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          currentTransactionFilter = e.target.dataset.filter;
+          document.querySelectorAll('[data-filter]').forEach(b => b.classList.remove('active'));
+          e.target.classList.add('active');
+          renderTransactions();
+        });
+      });
+
+      // Opportunity event listeners
+      document.getElementById('opportunitySearchInput').addEventListener('input', handleOpportunitySearch);
+      document.querySelectorAll('[data-opportunity-filter]').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          currentOpportunityFilter = e.target.dataset.opportunityFilter;
+          document.querySelectorAll('[data-opportunity-filter]').forEach(b => b.classList.remove('active'));
+          e.target.classList.add('active');
+          renderOpportunities();
+        });
+      });
+
+      // Initial render
+      updateDashboard();
+      renderOpportunities();
+    });
+
+    // Transaction Functions
+    function handleTransactionSubmit(e) {
+      e.preventDefault();
+      const description = document.getElementById('description').value.trim();
+      const amount = parseFloat(document.getElementById('amount').value);
+      const type = document.getElementById('type').value;
+      const category = document.getElementById('category').value;
+      const date = document.getElementById('date').value;
+
+      if (!description || !amount || amount <= 0) {
+        showToast('❌ Please enter valid transaction details');
+        return;
+      }
+
+      const transaction = {
+        id: Date.now() + '-' + Math.random().toString(36).substr(2, 9),
+        description,
+        amount,
+        type,
+        category,
+        date
+      };
+
+      transactions.unshift(transaction);
+      saveTransactions();
+      updateDashboard();
+      document.getElementById('transactionForm').reset();
+      document.getElementById('date').valueAsDate = new Date();
+      showToast('✓ Transaction added successfully!');
+    }
+
+    function handleTransactionSearch(e) {
+      transactionSearchTerm = e.target.value.toLowerCase();
+      renderTransactions();
+    }
+
+    function updateDashboard() {
+      updateSummary();
+      updateCharts();
+      renderTransactions();
+    }
+
+    function updateSummary() {
+      const income = transactions
+        .filter(t => t.type === 'income')
+        .reduce((sum, t) => sum + t.amount, 0);
+      const expenses = transactions
+        .filter(t => t.type === 'expense')
+        .reduce((sum, t) => sum + t.amount, 0);
+      const balance = income - expenses;
+      const incomeCount = transactions.filter(t => t.type === 'income').length;
+      const expenseCount = transactions.filter(t => t.type === 'expense').length;
+
+      document.getElementById('totalIncome').textContent = formatCurrency(income);
+      document.getElementById('totalExpenses').textContent = formatCurrency(expenses);
+      document.getElementById('balance').textContent = formatCurrency(balance);
+      document.getElementById('balance').style.color = balance >= 0 ? '#10B981' : '#EF4444';
+      document.getElementById('incomeCount').textContent = `${incomeCount} transaction${incomeCount !== 1 ? 's' : ''}`;
+      document.getElementById('expenseCount').textContent = `${expenseCount} transaction${expenseCount !== 1 ? 's' : ''}`;
+    }
+
+    function updateCharts() {
+      updatePieChart();
+      updateBarChart();
+    }
+
+    function updatePieChart() {
+      const expensesByCategory = {};
+      transactions
+        .filter(t => t.type === 'expense')
+        .forEach(t => {
+          expensesByCategory[t.category] = (expensesByCategory[t.category] || 0) + t.amount;
+        });
+
+      const labels = Object.keys(expensesByCategory);
+      const data = Object.values(expensesByCategory);
+      const colors = ['#10B981', '#3B82F6', '#F59E0B', '#EF4444', '#8B5CF6', '#EC4899', '#14B8A6', '#F97316'];
+
+      const ctx = document.getElementById('pieChart').getContext('2d');
+      if (pieChartInstance) pieChartInstance.destroy();
+
+      if (labels.length === 0) {
+        pieChartInstance = null;
+        return;
+      }
+
+      pieChartInstance = new Chart(ctx, {
+        type: 'pie',
+        data: {
+          labels: labels,
+          datasets: [{
+            data: data,
+            backgroundColor: colors.slice(0, labels.length),
+            borderWidth: 2,
+            borderColor: '#fff'
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { position: 'bottom', labels: { padding: 15, font: { size: 12 } } },
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  const label = context.label || '';
+                  const value = formatCurrency(context.parsed);
+                  const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                  const percentage = ((context.parsed / total) * 100).toFixed(1);
+                  return `${label}: ${value} (${percentage}%)`;
+                }
+              }
+            }
+          }
+        }
+      });
+    }
+
+    function updateBarChart() {
+      const income = transactions
+        .filter(t => t.type === 'income')
+        .reduce((sum, t) => sum + t.amount, 0);
+      const expenses = transactions
+        .filter(t => t.type === 'expense')
+        .reduce((sum, t) => sum + t.amount, 0);
+
+      const ctx = document.getElementById('barChart').getContext('2d');
+      if (barChartInstance) barChartInstance.destroy();
+
+      barChartInstance = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: ['Income', 'Expenses'],
+          datasets: [{
+            label: 'Amount',
+            data: [income, expenses],
+            backgroundColor: ['#10B981', '#EF4444'],
+            borderRadius: 8,
+            borderWidth: 0
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { display: false }, tooltip: { callbacks: { label: function(context) { return formatCurrency(context.parsed.y); } } } },
+          scales: { y: { beginAtZero: true, ticks: { callback: function(value) { return '₹' + value.toLocaleString('en-IN'); } } } }
+        }
+      });
+    }
+
+    function renderTransactions() {
+      const filtered = transactions.filter(t => {
+        const matchesSearch = t.description.toLowerCase().includes(transactionSearchTerm) ||
+                             t.category.toLowerCase().includes(transactionSearchTerm);
+        const matchesType = currentTransactionFilter === 'all' || t.type === currentTransactionFilter;
+        return matchesSearch && matchesType;
+      });
+
+      const container = document.getElementById('transactionList');
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div class="empty-state">
+            <p>No transactions found</p>
+            <p style="font-size: 0.875rem;">Add your first transaction to get started!</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = filtered.map(t => `
+        <div class="transaction-item">
+          <div class="transaction-left">
+            <div class="transaction-icon ${t.type}">${t.type === 'income' ? '↗️' : '↘️'}</div>
+            <div class="transaction-details">
+              <div class="transaction-description">${t.description}</div>
+              <div class="transaction-meta">
+                <span class="transaction-category">${t.category}</span>
+                <span>${formatDate(t.date)}</span>
+              </div>
+            </div>
+          </div>
+          <div class="transaction-right">
+            <div class="transaction-amount ${t.type}">${t.type === 'income' ? '+' : '-'}${formatCurrency(t.amount)}</div>
+            <button class="btn-icon btn-danger" onclick="deleteTransaction('${t.id}')">🗑️</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function deleteTransaction(id) {
+      const transaction = transactions.find(t => t.id === id);
+      if (confirm(`Delete "${transaction.description}"?`)) {
+        transactions = transactions.filter(t => t.id !== id);
+        saveTransactions();
+        updateDashboard();
+        showToast('✓ Transaction deleted');
+      }
+    }
+
+    function saveTransactions() {
+      localStorage.setItem('finance-transactions', JSON.stringify(transactions));
+    }
+
+    // Opportunity Functions
+    function loadSelections() {
+      return JSON.parse(localStorage.getItem('studentSelections')) || {};
+    }
+
+    function saveSelections(selections) {
+      localStorage.setItem('studentSelections', JSON.stringify(selections));
+    }
+
+    function handleOpportunitySearch(e) {
+      opportunitySearchTerm = e.target.value.toLowerCase();
+      renderOpportunities();
+    }
+
+    function renderOpportunities() {
+      const selections = loadSelections();
+      const filtered = opportunities.filter(item => {
+        const matchesSearch = item.title.toLowerCase().includes(opportunitySearchTerm) ||
+                             item.description.toLowerCase().includes(opportunitySearchTerm) ||
+                             item.platform.toLowerCase().includes(opportunitySearchTerm);
+        const matchesCategory = currentOpportunityFilter === 'all' || item.category === currentOpportunityFilter;
+        return matchesSearch && matchesCategory;
+      });
+
+      const container = document.getElementById('opportunityList');
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div class="empty-state">
+            <p>No opportunities found</p>
+            <p style="font-size: 0.875rem;">Try adjusting your search or filter!</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = filtered.map(item => {
+        const isChecked = selections[item.id] || false;
+        return `
+          <div class="opportunity-item">
+            <div class="opportunity-left">
+              <div class="opportunity-icon">🎓</div>
+              <div class="opportunity-details">
+                <div class="opportunity-title">${item.title}</div>
+                <div class="opportunity-meta">
+                  <span class="opportunity-category">${item.category}</span>
+                  <span>Platform: ${item.platform}</span>
+                </div>
+                <div class="opportunity-meta">${item.description}</div>
+                <div class="opportunity-meta">Requirements: ${item.requirements}</div>
+              </div>
+            </div>
+            <div class="opportunity-right">
+              <div class="opportunity-earnings">${item.earnings}</div>
+              <label class="flex items-center cursor-pointer">
+                <input type="checkbox" class="opportunity-checkbox" data-id="${item.id}" ${isChecked ? 'checked' : ''}>
+                <span class="text-sm font-medium">Interested</span>
+              </label>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      // Attach checkbox listeners
+      document.querySelectorAll('.opportunity-checkbox').forEach(checkbox => {
+        checkbox.addEventListener('change', (e) => {
+          const id = parseInt(e.target.dataset.id);
+          const selections = loadSelections();
+          selections[id] = e.target.checked;
+          saveSelections(selections);
+          showToast(`✓ Interest ${e.target.checked ? 'marked' : 'unmarked'} for ${opportunities.find(o => o.id === id).title}`);
+        });
+      });
+    }
+
+    // Shared Utility Functions
+    function formatCurrency(amount) {
+      return '₹' + amount.toLocaleString('en-IN', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+    }
+
+    function formatDate(dateString) {
+      const date = new Date(dateString);
+      return date.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+    }
+
+    function showToast(message) {
+      const toast = document.createElement('div');
+      toast.textContent = message;
+      toast.style.cssText = `
+        position: fixed; bottom: 2rem; right: 2rem; background: #10B981; color: white;
+        padding: 1rem 1.5rem; border-radius: 8px; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        animation: slideIn 0.3s ease-out; z-index: 1000;
+      `;
+      const style = document.createElement('style');
+      style.textContent = `@keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }`;
+      document.head.appendChild(style);
+      document.body.appendChild(toast);
+      setTimeout(() => {
+        toast.style.animation = 'slideIn 0.3s ease-out reverse';
+        setTimeout(() => toast.remove(), 300);
+      }, 2000);
+    }
+  </script>
 </body>
 </html>
