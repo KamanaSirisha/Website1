@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Dashboard — FinPilot Students</title>
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+:root{ --accent1:#06B6D4; --accent2:#2563EB; --bg:#0f1724; --muted:#94a3b8; --card: rgba(255,255,255,0.03); --glass-border: rgba(255,255,255,0.04); --radius:12px; }
+body{margin:0;font-family:Inter,system-ui,Arial;background:radial-gradient(1200px 400px at 10% 10%, rgba(37,99,235,0.12), transparent 10%), radial-gradient(800px 300px at 90% 90%, rgba(6,182,212,0.10), transparent 10%), var(--bg); color:#ecf5ff;}
+.wrap{max-width:1100px;margin:0 auto;padding:24px;}
+.header{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0;}
+.brand{display:flex;gap:12px;align-items:center;text-decoration:none;color:inherit}
+.logo{width:46px;height:46px;border-radius:10px;overflow:hidden}
+nav a{color:var(--muted);text-decoration:none;margin-left:12px;font-weight:600}
+nav a:hover{color:#fff}
+.btn{background:linear-gradient(90deg,var(--accent1),var(--accent2));border:none;color:#fff;padding:10px 14px;border-radius:10px;font-weight:700;cursor:pointer}
+.ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:8px 10px;border-radius:10px;color:var(--muted)}
+.card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:16px;border-radius:10px;border:1px solid var(--glass-border);}
+.footer{padding:18px 0;color:var(--muted);font-size:14px;text-align:center}
+.container-grid{display:grid;grid-template-columns:1fr 400px;gap:20px;align-items:start}
+@media(max-width:900px){.container-grid{grid-template-columns:1fr}nav{display:none}}
+.muted{color:var(--muted);font-size:13px}
+.small{font-size:13px;color:var(--muted)}
+input,select,textarea{background:transparent;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);color:inherit;width:100%}
+</style></head>
+<body>
+<header class="wrap header">
+  <a class="brand" href="index.html"><div class="logo"><img src="assets/logo.svg" alt="logo" style="width:46px;height:46px"></div><div><strong>FinPilot Students</strong><div class="small">Student Earning Dashboard</div></div></a>
+  <nav><a href="index.html">Home</a><a href="dashboard.html">Dashboard</a><a href="earn.html">Student Jobs & Services</a><a href="about.html">About</a><a href="contact.html">Contact</a></nav>
+</header>
+<main class="wrap">
+  <section class="card">
+    <h2 style="margin:0 0 8px 0">Student Earning Dashboard 🎓</h2>
+    <p class="muted" style="margin:0 0 12px 0">Track pocket money, part-time income, scholarships and student spending categories.</p>
+
+    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:12px">
+      <div class="card" style="min-width:160px"><div class="small">Balance</div><div id="totalBalance" style="font-weight:800">₹0</div></div>
+      <div class="card" style="min-width:160px"><div class="small">Total Income</div><div id="totalInc" style="font-weight:800">₹0</div></div>
+      <div class="card" style="min-width:160px"><div class="small">Total Expenses</div><div id="totalExp" style="font-weight:800">₹0</div></div>
+    </div>
+
+    <div class="card" style="margin-bottom:12px">
+      <form id="txForm" onsubmit="return false" style="display:flex;gap:10px;flex-wrap:wrap;align-items:end">
+        <div style="flex:1;min-width:160px"><label class="small">Description</label><input id="desc" placeholder="e.g., Part-time tutoring"></div>
+        <div style="width:120px"><label class="small">Amount (₹)</label><input id="amt" type="number" step="0.01"></div>
+        <div style="width:160px"><label class="small">Type</label><select id="type"><option value="income">Income</option><option value="expense">Expense</option></select></div>
+        <div style="width:160px"><label class="small">Category</label><select id="cat"><option>Pocket Money</option><option>Part-time Job</option><option>Scholarship</option><option>Food</option><option>Books</option><option>Hostel</option><option>Transport</option><option>Entertainment</option><option>Others</option></select></div>
+        <div style="min-width:120px"><button id="addTx" class="btn">Add</button></div>
+      </form>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 360px;gap:12px">
+      <div class="card">
+        <h4 style="margin:0 0 8px 0">Transactions</h4>
+        <div id="txList" style="margin-top:8px"></div>
+      </div>
+      <aside>
+        <div class="card" style="margin-bottom:12px"><h4 style="margin:0 0 8px 0">Expenses by category</h4><div style="height:220px"><canvas id="pie"></canvas></div></div>
+        <div class="card"><h4 style="margin:0 0 8px 0">Income vs Expenses</h4><div style="height:220px"><canvas id="bar"></canvas></div></div>
+      </aside>
+    </div>
+
+    <div style="margin-top:10px;display:flex;gap:8px"><button id="export" class="btn">Export CSV</button><button id="reset" class="btn" style="background:transparent;border:1px solid rgba(255,255,255,0.06)">Reset</button></div>
+  </section>
+</main>
+<footer class="wrap footer">Need help? Email: <a href="mailto:kamanasirisha117@gmail.com">kamanasirisha117@gmail.com</a> • © 2025 FinPilot Students</footer>
+<script>
+const LS = 'finpilot-students-v1';
+let txs = JSON.parse(localStorage.getItem(LS)||'[]');
+const totalBalance = document.getElementById('totalBalance'), totalInc = document.getElementById('totalInc'), totalExp = document.getElementById('totalExp');
+const txList = document.getElementById('txList'), pieCtx = document.getElementById('pie').getContext('2d'), barCtx = document.getElementById('bar').getContext('2d');
+const desc = document.getElementById('desc'), amt = document.getElementById('amt'), type = document.getElementById('type'), cat = document.getElementById('cat');
+document.getElementById('addTx').addEventListener('click', ()=>{
+  const d = desc.value.trim(), a = Number(amt.value), tp = type.value, c = cat.value;
+  if(!d||!a){ alert('Enter valid description and amount'); return; }
+  txs.unshift({id:Date.now().toString(36),description:d,amount:a,type:tp,category:c,date:new Date().toISOString()});
+  localStorage.setItem(LS,JSON.stringify(txs)); desc.value=''; amt.value=''; updateAll(); toast('Transaction added');
+});
+function deleteTx(id){ if(!confirm('Delete?')) return; txs = txs.filter(t=>t.id!==id); localStorage.setItem(LS,JSON.stringify(txs)); updateAll(); toast('Deleted'); }
+function formatCurr(n){ return '₹'+Math.round(n).toLocaleString('en-IN'); }
+function updateSummary(){ const inc = txs.filter(t=>t.type==='income').reduce((s,t)=>s+t.amount,0); const exp = txs.filter(t=>t.type==='expense').reduce((s,t)=>s+t.amount,0); totalInc.textContent = formatCurr(inc); totalExp.textContent = formatCurr(exp); totalBalance.textContent = formatCurr(inc-exp); }
+function renderTxs(){ if(!txs.length){ txList.innerHTML='<div class="small muted">No transactions yet.</div>'; return; } txList.innerHTML = txs.map(t=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);margin-bottom:6px"><div><div style="font-weight:700">${escapeHtml(t.description)}</div><div class="small muted">${t.category} • ${new Date(t.date).toLocaleDateString()}</div></div><div style="display:flex;gap:8px;align-items:center"><div style="font-weight:800">${t.type==='income'?'+':'-'}${formatCurr(t.amount)}</div><button class="btn" style="background:transparent;border:1px solid rgba(255,255,255,0.04)" onclick="deleteTx('${'${t.id}'}')">Delete</button></div></div>`).join(''); }
+function escapeHtml(s){ return (s+'').replace(/[&<>\"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
+
+let pieChart, barChart;
+function updateCharts(){ const byCat = {}; txs.filter(t=>t.type==='expense').forEach(t=>byCat[t.category]=(byCat[t.category]||0)+t.amount); const labels=Object.keys(byCat), data=Object.values(byCat); if(pieChart) pieChart.destroy(); pieChart = new Chart(pieCtx,{type:'doughnut',data:{labels:labels.length?labels:['No data'],datasets:[{data:labels.length?data:[1],backgroundColor:['#06B6D4','#2563EB','#10B981','#F59E0B']}]},options:{maintainAspectRatio:false,plugins:{legend:{position:'bottom'}}}}); const inc = txs.filter(t=>t.type==='income').reduce((s,t)=>s+t.amount,0); const exp = txs.filter(t=>t.type==='expense').reduce((s,t)=>s+t.amount,0); if(barChart) barChart.destroy(); barChart = new Chart(barCtx,{type:'bar',data:{labels:['Income','Expenses'],datasets:[{data:[inc,exp],backgroundColor:['#10B981','#EF4444'],borderRadius:8}]},options:{maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true}}}}); }
+
+function updateAll(){ updateSummary(); renderTxs(); updateCharts(); document.getElementById('homeBalance') && (document.getElementById('homeBalance').textContent = totalBalance.textContent); }
+document.getElementById('export').addEventListener('click', ()=>{ if(!txs.length){ alert('No transactions'); return; } const csv = ['id,description,amount,type,category,date', ...txs.map(t=>`"${t.id}","${t.description}","${t.amount}","${t.type}","${t.category}","${t.date}"`)].join('\n'); const b=new Blob([csv],{type:'text/csv'}); const a=document.createElement('a'); a.href=URL.createObjectURL(b); a.download='finpilot-students.csv'; document.body.appendChild(a); a.click(); a.remove(); toast('Export ready'); });
+document.getElementById('reset').addEventListener('click', ()=>{ if(!confirm('Reset all data?')) return; txs=[]; localStorage.setItem(LS,JSON.stringify(txs)); updateAll(); toast('Reset done'); });
+
+function toast(t){ const el=document.createElement('div'); el.textContent=t; el.style.cssText='position:fixed;right:18px;bottom:18px;background:linear-gradient(90deg,#2563EB,#06B6D4);color:#fff;padding:10px 14px;border-radius:8px;box-shadow:0 8px 24px rgba(2,6,23,0.4)'; document.body.appendChild(el); setTimeout(()=>el.remove(),1800); }
+
+updateAll();
+</script>
+</html>
